@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>System Health Dashboard</title>
+<style>
+body {
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: white;
+}
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+.card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+.card h3 {
+  color: #38bdf8;
+}
+.health {
+  margin-top: 30px;
+  padding: 20px;
+  text-align: center;
+  border-radius: 15px;
+}
+.good { background:#064e3b; }
+.medium { background:#78350f; }
+.bad { background:#7f1d1d; }
+.timestamp {
+  text-align:center;
+  margin-bottom:20px;
+  opacity:0.7;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>System Health Dashboard</h1>
+<div class="timestamp" id="time"></div>
+
+<div class="grid">
+
+  <div class="card">
+    <h3>CPU Metrics</h3>
+    Current: <span id="cpu_current"></span>%<br>
+    Average: <span id="cpu_avg"></span>%<br>
+    Max: <span id="cpu_max"></span>%<br>
+    Min: <span id="cpu_min"></span>%<br>
+    Usage Seconds: <span id="cpu_usage"></span><br>
+    Throttled Seconds: <span id="cpu_throttle"></span><br>
+    CPU Limit: <span id="cpu_limit"></span>
+  </div>
+
+  <div class="card">
+    <h3>Memory Metrics</h3>
+    Current: <span id="mem_current"></span>%<br>
+    Used: <span id="mem_used"></span> MB<br>
+    Available: <span id="mem_avail"></span> MB<br>
+    Limit: <span id="mem_limit"></span> MB<br>
+    Average: <span id="mem_avg"></span>%<br>
+    Max: <span id="mem_max"></span>%<br>
+    Min: <span id="mem_min"></span>%
+  </div>
+
+  <div class="card">
+    <h3>System</h3>
+    Uptime: <span id="uptime"></span> sec<br>
+    Health Score: <span id="score"></span>
+  </div>
+
+</div>
+
+<div id="healthBox" class="health"></div>
+</div>
+
+<script>
+function loadData() {
+  fetch("/analyze")
+    .then(res => res.json())
+    .then(d => {
+
+      document.getElementById("time").innerText = "Last Updated: " + d.timestamp;
+
+      document.getElementById("cpu_current").innerText = d.cpu_metric.current_percent;
+      document.getElementById("cpu_avg").innerText = d.cpu_metric.average_percent;
+      document.getElementById("cpu_max").innerText = d.cpu_metric.max_percent;
+      document.getElementById("cpu_min").innerText = d.cpu_metric.min_percent;
+      document.getElementById("cpu_usage").innerText = d.cpu_metric.usage_seconds;
+      document.getElementById("cpu_throttle").innerText = d.cpu_metric.throttled_seconds;
+      document.getElementById("cpu_limit").innerText = d.cpu_metric.cpu_limit;
+
+      document.getElementById("mem_current").innerText = d.memory_metric.current_percent;
+      document.getElementById("mem_used").innerText = d.memory_metric.used_mb;
+      document.getElementById("mem_avail").innerText = d.memory_metric.available_mb;
+      document.getElementById("mem_limit").innerText = d.memory_metric.limit_mb;
+      document.getElementById("mem_avg").innerText = d.memory_metric.average_percent;
+      document.getElementById("mem_max").innerText = d.memory_metric.max_percent;
+      document.getElementById("mem_min").innerText = d.memory_metric.min_percent;
+
+      document.getElementById("uptime").innerText = d.uptime_seconds;
+      document.getElementById("score").innerText = d.health_score;
+
+      const box = document.getElementById("healthBox");
+      box.innerText = d.message;
+      box.className = "health " +
+        (d.health_score >= 80 ? "good" :
+         d.health_score >= 50 ? "medium" : "bad");
+    });
+}
+
+loadData();
+setInterval(loadData, 1000);
+</script>
+</body>
+</html>
