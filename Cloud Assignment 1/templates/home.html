@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cloud Secure Form</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0d1117;font-family:'Segoe UI',sans-serif;height:100vh;display:flex;justify-content:center;align-items:center;color:#fff}
+.card{background:#161b22;padding:40px;width:420px;border-radius:15px;box-shadow:0 0 25px rgba(0,0,0,0.8)}
+h2{text-align:center;margin-bottom:25px;font-weight:500;letter-spacing:1px}
+label{font-size:14px;margin-bottom:5px;display:block;color:#c9d1d9}
+input{width:100%;padding:12px;margin-bottom:10px;border-radius:8px;border:1px solid #30363d;background:#0d1117;color:white;font-size:14px}
+input:focus{outline:none;border-color:#58a6ff;box-shadow:0 0 5px #58a6ff}
+button{width:100%;padding:12px;border:none;border-radius:8px;background:#238636;color:white;font-weight:bold;cursor:pointer;transition:.3s}
+button:hover{background:#2ea043}
+.errorlist{list-style:none;font-size:13px;color:#ff7b72;margin-bottom:10px}
+.error{color:#ff7b72;font-size:13px;margin-bottom:10px}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>Cloud Assignment 1 Form</h2>
+<form method="POST">
+{% csrf_token %}
+
+<label>Email</label>
+{{ form.email }}
+{% if form.email.errors %}
+<div class="error">{{ form.email.errors.0 }}</div>
+{% endif %}
+
+<label>Username</label>
+{{ form.name }}
+
+<label>Password</label>
+{{ form.password }}
+{% if form.password.errors %}
+<div class="error">{{ form.password.errors.0 }}</div>
+{% endif %}
+
+<button type="submit">Submit Securely</button>
+</form>
+</div>
+</body>
+</html>
