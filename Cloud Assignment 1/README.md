@@ -1,88 +1,72 @@
-📝 Form Data Collection & Cloud Storage App
+# Form Data Collection & Cloud Storage App
 
-  A robust Django-based registration system designed with security and cloud scalability in mind. This application handles user data through a multi-
-  layered validation pipeline and is deployed on a Google Cloud Platform (GCP) Compute Engine instance.
+A secure, cloud-deployed registration engine.
 
-Overview
+---
 
-This project demonstrates a complete end-to-end workflow: from building a secure backend that prevents duplicate entries and enforces password entropy, to configuring a cloud-based Linux environment with specific firewall rules for public access.
+## 1. Project Overview
+This application provides a secure registration pipeline hosted on a Google Cloud VM. It bridges the gap between front-end data collection and secure back-end persistence using Django's robust validation framework.
 
-🛠 Tech Stack
+---
 
-Backend: Django (Python 3.x)
+## 2. Tech Stack
+* Backend: Django (Python 3.x)
+* Frontend: HTML5 & CSS3
+* Database: SQLite (Primary) & CSV (Backup)
+* Infrastructure: Google Cloud VM (Debian)
+* Networking: GCE Firewall, Port 8000
 
-Frontend: HTML5, CSS3
+---
 
-Database: SQLite (Relational) & CSV (Flat-file backup)
+## 3. Key Features
+* Strong Backend Validation: Leverages Django `forms.py` to prevent XSS and malformed data.
+* Unique Email Verification: Logic to ensure no duplicate accounts can be created.
+* Password Complexity: Enforces strict security policies at the entry point.
+* Dual-Storage Engine: Simultaneously writes to a relational DB and a flat-file CSV.
+* Cloud Deployment: Fully configured for external access via GCP Ingress rules.
 
-Infrastructure: Google Cloud VM (Debian Linux)
+---
 
-Networking: GCE Firewall, Virtualenv
+<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/eb03c57c-8f8c-4c7a-acac-33aeef2f7188" />
 
-⚙️ Key Features
-Strong Backend Validation: Prevents XSS and injection by leveraging Django's native form handling.
+---
 
-Integrity Checks: Automated verification for unique email addresses to prevent account duplication.
+## 5. Application Workflow
+* Submission: User inputs data into the registration form via the frontend interface.
+* Validation:
+    * Checks for empty or malformed fields.
+    * Verifies email uniqueness against existing database records.
+    * Tests password entropy to ensure high security.
+* Persistence: Validated records are securely stored in `db.sqlite3` and simultaneously appended to `user_data.csv`.
+* Response: A real-time success message is triggered via the Django Messages framework to confirm registration.
 
-Password Policy: Enforces complexity requirements to ensure user data security.
+---
 
-Dual-Layer Storage: Records are persisted in db.sqlite3 for the app and appended to user_data.csv for data portability.
+## 6. Deployment Details
+* Server Infrastructure: Hosted on Google Cloud Platform (GCP) using a Debian Linux VM.
+* Networking: Configured with a specific Ingress Firewall Rule to allow traffic on TCP Port 8000.
+* Host Configuration: `ALLOWED_HOSTS` is strictly defined to include the static IP `35.197.112.48` and `localhost` for secure access.
 
-Cloud Optimized: Specifically configured for remote hosting with ALLOWED_HOSTS and custom Ingress rules.
+---
 
-🔄 Application Workflow
-Submission: User enters details via the HTML frontend.
+## 7. How to Run
 
-Validation: Django forms check for data types and required fields.
-
-Security Check: Backend runs duplication checks on the email and evaluates password strength.
-
-Persistence: Upon passing validation, data is committed to both the SQL database and a local CSV file.
-
-Response: User receives a success confirmation and a redirect.
-
-📂 Project Structure
-Plaintext
-
-formproject/
-│
-├── formapp/            # Application logic, models, and views
-├── static/             # CSS, JavaScript, and Images
-├── db.sqlite3          # Relational database storage
-├── user_data.csv       # Flat-file data backup
-├── manage.py           # Django management script
-└── requirements.txt    # Project dependencies
-☁️ Deployment & Installation
-1. Prerequisites
-Ensure your Google Cloud Firewall allows traffic on Port 8000 for the target VM instance.
-
-2. Setup
-Bash
-# Clone the repository
-git clone <your-repo-link>
-cd formproject
-
-# Activate the virtual environment
+Step 1: Activate Environment
 source gcp-venv/bin/activate
 
-# Install dependencies
+Step 2: Install Dependencies
 pip install -r requirements.txt
 
-# Apply database migrations
+Step 3: Migrate & Run
 python manage.py migrate
-3. Execution
-Bash
-# Start the server on all network interfaces
 python manage.py runserver 0.0.0.0:8000
-Note: Access the live application at: http://35.197.112.48:8000/
 
-🎯 Learning Outcomes
-Django Internals: Mastering the forms.py and views.py relationship.
+---
 
-Security: Implementing server-side validation over client-side reliance.
+## 8. Author
+* Name: Aryan Srivastava
 
-Cloud Computing: Configuring Google Cloud Virtual Machines, static IPs, and firewall ingress rules.
 
-Linux Administration: Managing Python environments and background processes via SSH.
+## 9. Project Snapshot
 
-Author: Aryan Srivastava
+<img width="1919" height="908" alt="user" src="https://github.com/user-attachments/assets/c4d14269-5073-46ed-b65e-4e275f04f99f" />
