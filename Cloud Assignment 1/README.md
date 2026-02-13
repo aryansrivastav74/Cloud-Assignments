@@ -1,104 +1,84 @@
-Form Data Collection & Cloud Storage Application
+📝 Form Data Collection & Cloud Storage App
+A robust Django-based registration system designed with security and cloud scalability in mind. This application handles user data through a multi-layered validation pipeline and is deployed on a Google Cloud Platform (GCP) Compute Engine instance.
 
-Overview
-
-A Django-based web application that collects user registration data, performs strong backend validation, and securely stores records. The project is deployed on a Google Cloud Virtual Machine with proper firewall and host configuration.
-
-Features
-
-Form validation with secure input handling
-
-Unique email verification
-
-Strong password policy enforcement
-
-Data storage in SQLite and CSV
-
-Deployment on Google Cloud VM
+  Overview
+This project demonstrates a complete end-to-end workflow: from building a secure backend that prevents duplicate entries and enforces password entropy, to configuring a cloud-based Linux environment with specific firewall rules for public access.
 
 🛠 Tech Stack
+Backend: Django (Python 3.x)
 
-Backend: Django (Python)
+Frontend: HTML5, CSS3
 
-Frontend: HTML, CSS
+Database: SQLite (Relational) & CSV (Flat-file backup)
 
-Database: SQLite
+Infrastructure: Google Cloud VM (Debian Linux)
 
-Hosting: Google Cloud VM
+Networking: GCE Firewall, Virtualenv
 
-Environment: Linux (Debian)
+⚙️ Key Features
+Strong Backend Validation: Prevents XSS and injection by leveraging Django's native form handling.
+
+Integrity Checks: Automated verification for unique email addresses to prevent account duplication.
+
+Password Policy: Enforces complexity requirements to ensure user data security.
+
+Dual-Layer Storage: Records are persisted in db.sqlite3 for the app and appended to user_data.csv for data portability.
+
+Cloud Optimized: Specifically configured for remote hosting with ALLOWED_HOSTS and custom Ingress rules.
 
 🔄 Application Workflow
+Submission: User enters details via the HTML frontend.
 
-User submits registration form
+Validation: Django forms check for data types and required fields.
 
-Backend validates input
+Security Check: Backend runs duplication checks on the email and evaluates password strength.
 
-Email duplication check performed
+Persistence: Upon passing validation, data is committed to both the SQL database and a local CSV file.
 
-Password strength verified
-
-Data stored securely
-
-Success response displayed
+Response: User receives a success confirmation and a redirect.
 
 📂 Project Structure
+Plaintext
+
 formproject/
 │
-├── formapp/
-├── static/
-├── db.sqlite3
-├── user_data.csv
-└── manage.py
+├── formapp/            # Application logic, models, and views
+├── static/             # CSS, JavaScript, and Images
+├── db.sqlite3          # Relational database storage
+├── user_data.csv       # Flat-file data backup
+├── manage.py           # Django management script
+└── requirements.txt    # Project dependencies
+☁️ Deployment & Installation
+1. Prerequisites
+Ensure your Google Cloud Firewall allows traffic on Port 8000 for the target VM instance.
 
-⚙ Deployment Details
-
-Server: Google Cloud VM
-
-Port: 8000
-
-Firewall: Ingress rule enabled
-
-ALLOWED_HOSTS configured for external access
-
-▶ How to Run
-
-Activate virtual environment
-
-source gcp-venv/bin/activate
-
-
-Navigate to project
-
+2. Setup
+Bash
+# Clone the repository
+git clone <your-repo-link>
 cd formproject
 
+# Activate the virtual environment
+source gcp-venv/bin/activate
 
-Apply migrations
+# Install dependencies
+pip install -r requirements.txt
 
+# Apply database migrations
 python manage.py migrate
-
-
-Start server
-
+3. Execution
+Bash
+# Start the server on all network interfaces
 python manage.py runserver 0.0.0.0:8000
-
-
-Access in browser
-
-(http://35.197.112.48:8000/)
+Note: Access the live application at: http://35.197.112.48:8000/
 
 🎯 Learning Outcomes
+Django Internals: Mastering the forms.py and views.py relationship.
 
-Django form handling
+Security: Implementing server-side validation over client-side reliance.
 
-Backend validation logic
+Cloud Computing: Configuring Google Cloud Virtual Machines, static IPs, and firewall ingress rules.
 
-Cloud VM deployment
+Linux Administration: Managing Python environments and background processes via SSH.
 
-Firewall configuration
-
-Author
-Aryan Srivastava
-
-Project SnapShot :
-<img width="1919" height="908" alt="user" src="https://github.com/user-attachments/assets/172db674-535f-484d-9dfc-a57d159b1094" />
+Author: Aryan Srivastava
