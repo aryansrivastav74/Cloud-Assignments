@@ -1,6 +1,7 @@
 📝 Form Data Collection & Cloud Storage App
 
-A robust Django-based registration system designed with security and cloud scalability in mind. This application handles user data through a multi-layered validation pipeline and is deployed on a Google Cloud Platform (GCP) Compute Engine instance.
+  A robust Django-based registration system designed with security and cloud scalability in mind. This application handles user data through a multi-
+  layered validation pipeline and is deployed on a Google Cloud Platform (GCP) Compute Engine instance.
 
 Overview
 
